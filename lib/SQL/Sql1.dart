@@ -1,6 +1,3 @@
-//import '../Sqlmodel.dart';
-
-
 
 import 'Sqlmodel.dart';
 
