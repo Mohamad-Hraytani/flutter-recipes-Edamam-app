@@ -140,6 +140,11 @@ Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> SqlFavori
         child: Icon(Icons.filter_alt_outlined),
       
       onPressed: (){
+
+
+
+
+        
      Provider.of<Recipe>(context,listen: false).setStateFilter("withFilter");
         Provider.of<Recipe>(context,listen: false).recipes.clear();
 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> Filters()));

@@ -288,7 +288,8 @@ recipesSearch.clear();
 
 Future<void> getRecipesSearchwithfilter({String SearchWord=""}) async {
 await initState();
-
+if(mealType==''&&health==''&& cuisineType==''&& dishType==''&& diet==''&&calories==''&&ingr=='')
+ SearchWord = "all";
     String url =
         'https://api.edamam.com/search?q=$SearchWord&app_id=85903da9&app_key=8bf0ca05cd6cf6b80300662f4aebba2d$mealType$health$cuisineType$dishType$diet$calories$ingr';
       
