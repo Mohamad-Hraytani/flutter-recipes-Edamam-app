@@ -166,37 +166,6 @@ Share.share('check out my website https://example.com', subject: 'Look what I ma
 
                                      }),
 
-                                   IconButton(
-                                      
-                                      icon: Icon(Icons.favorite,
-                                    color: currentitem.recipesSearch[index].fav == "1"? Colors.white :Colors.red
-                                    , 
-                                     
-                                     ), onPressed: ()async{
-
-
-
-if (currentitem.recipesSearch[index].fav == "1")
-  { 
-    SharedPreferences prefs =await SharedPreferences.getInstance();
-       int id =int.parse(prefs.getString("id")??"0");
-       int newid = id+1;
-       prefs.setString('id', newid.toString());
-
-
-    currentitem.setrecipelist(index, "2");
-   await curt.insert(recipemodel( id: id, lable: currentitem.recipesSearch[index].label,image: currentitem.recipesSearch[index].image), );
-   
-   }
-else {
-mySqdb mo1=new mySqdb();
-var t1= await mo1.getAll("recipe", "recipe_db");
-var id_item = t1.where((element) => currentitem.recipesSearch[index].label==element.getlable()).first.getid();
-currentitem.setrecipelist(index, "1");
-curt.delete(recipemodel(id:id_item, lable: currentitem.recipesSearch[index].label,image: currentitem.recipesSearch[index].image), );
-}
-
-                                     }),
                                  ],
                                );}
                               )

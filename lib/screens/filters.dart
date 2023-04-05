@@ -134,7 +134,7 @@ Row(
 Row(
     children: [
           cuisineType(context),
-          Text('CuisineType',style: TextStyle(fontSize: 25))
+          Text('CuisineType',style: TextStyle(fontSize: 23))
     ],
 ) 
 ]
