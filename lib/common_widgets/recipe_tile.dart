@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 class RecipeTile extends StatelessWidget {
    RecipeTile({
     Key key,

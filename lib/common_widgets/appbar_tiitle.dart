@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 class AppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

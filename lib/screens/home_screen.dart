@@ -14,7 +14,7 @@ import 'package:flutterrecipe/helpers/recipe.dart';
 
 import 'package:flutterrecipe/model/recipe_model.dart';
 import 'package:provider/provider.dart';
-import 'package:flutterrecipe/SQL/Sqltest.dart';
+import 'package:flutterrecipe/SQL/SqlFavorite.dart';
 import 'Search.dart';
 import 'details_screen.dart';
 import 'filters.dart';
@@ -127,7 +127,7 @@ else
       
       icon: Icon(Icons.favorite ,color: Colors.red,size: 40,), onPressed: (){
 
-Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> Sqltest()));
+Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> SqlFavorite()));
 
 
      }),

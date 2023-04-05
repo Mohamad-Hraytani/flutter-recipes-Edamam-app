@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 
-//import 'package:flutterrecipe/keys.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterrecipe/SQL/Sql1.dart';
 
 import 'package:flutterrecipe/model/recipe_model.dart';
 import 'package:http/http.dart' as http;
@@ -272,6 +270,9 @@ recipesSearch.clear();
             label: element['recipe']['label'],
             image: element['recipe']['image'],
             source: element['recipe']['source'],
+            shareAs: element['recipe']['shareAs'],
+            ingredientLines: element['recipe']['ingredientLines'].cast<String>(),
+            ingredients: element['recipe']['ingredients'].cast<Map<String,dynamic>>(),
             fav: "1"
           );
 
@@ -290,12 +291,12 @@ await initState();
 
     String url =
         'https://api.edamam.com/search?q=$SearchWord&app_id=85903da9&app_key=8bf0ca05cd6cf6b80300662f4aebba2d$mealType$health$cuisineType$dishType$diet$calories$ingr';
-        print(url);
+      
     var response = await http.get(url);
 
     var jsonData = jsonDecode(response.body);
 
- //   if (jsonData['more'] == true) {
+    if (jsonData['more'] == true) {
 
       jsonData['hits'].forEach((element) {
         if (element['recipe']['url'] != null &&
@@ -304,6 +305,9 @@ await initState();
             label: element['recipe']['label'],
             image: element['recipe']['image'],
             source: element['recipe']['source'],
+            shareAs: element['recipe']['shareAs'],
+            ingredientLines: element['recipe']['ingredientLines'].cast<String>(),
+            ingredients: element['recipe']['ingredients'].cast<Map<String,dynamic>>(),
             fav: "1"
           );
 
@@ -311,7 +315,7 @@ await initState();
        
         }
       });
-    //}
+    }
   }
 
 

@@ -1,26 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterrecipe/common_widgets/recipe_tile.dart';
+
 import 'package:flutterrecipe/helpers/recipe.dart';
-import 'package:flutterrecipe/model/recipe_model.dart';
+
 import 'package:flutterrecipe/screens/home_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite/sqflite.dart';
+
 
 
 
 import 'Sql1.dart';
 import 'Sqlmodel.dart';
-import 'package:provider/provider.dart';
+
 
 import 'mySqdb.dart';
 
-class Sqltest extends StatefulWidget {
+class SqlFavorite extends StatefulWidget {
   @override
-  _SqltestState createState() => _SqltestState();
+  _SqlFavoriteState createState() => _SqlFavoriteState();
 }
 
-class _SqltestState extends State<Sqltest> {
+class _SqlFavoriteState extends State<SqlFavorite> {
   
 
   @override
@@ -79,7 +79,7 @@ Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> HomeScree
   }
 
   Widget n(BuildContext context, List<recipemodel> recipes ,mySqdb cur) {
-    // List<dog> dogs = snap ;
+
     return Consumer<Recipe>(
       builder:  (ctx, currentitem, _){
       return ListView.builder(
@@ -135,58 +135,10 @@ await cur.delete(recipemodel(id: recipes[position].id, lable: recipes[position].
   ),
 
                       ),
-  
-  
-  
-  
-  /* 
-     RecipeTile(
-  
-                                imageUrl: recipes[position].image,
-  
-                                recipeName: recipes[position].lable,
-  
-                                
-  
-                                
-  
-                          
-  
-                              ) */
-                             
-/* IconButton(icon: Icon(Icons.favorite), onPressed: ()async{
-currentitem.setrecipelistbymodel(currentitem.recipes.where((element) => element.image==recipes[position].image).first);
-
-await cur.delete(recipemodel(id: recipes[position].id, lable: recipes[position].lable,image: recipes[position].image), );
-
-
-       }), */
-
-
-
-
-/* Text(recipes[position].image),
-              SizedBox(
-                width: 15,
-              ),
-
-
-              Text(recipes[position].lable),
-              SizedBox(
-                width: 15,
-              ),
-               */
-              
-         /*      RaisedButton(onPressed: () async {
-            //    await mydb.update(recipemodel('mmh0', "",0));
-              }), */
             ],
           );
 
-          /*  ListTile(
-            title: Text(dogss[position].name),
-            leading: Text(dogss[position].age.toString()),
-          ); */
+     
         },
       );}
     );
