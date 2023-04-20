@@ -35,9 +35,15 @@ class RecipeTile extends StatelessWidget {
                   topLeft: Radius.circular(8.0),
                   topRight: Radius.circular(8.0),
                 ),
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
+                child: FadeInImage(
+placeholder: AssetImage("image/back.png"),
+                  image : NetworkImage(
+
+                    imageUrl,
+
+                  
+                  ),
+                    fit: BoxFit.cover,
                 ),
               ),
             ),

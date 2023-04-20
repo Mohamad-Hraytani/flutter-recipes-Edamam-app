@@ -27,10 +27,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-List<RecipeModel> recipeList ;
+//List<RecipeModel> recipeList ;
 List<Sqmodel> t;
   bool _loading = true;
  var id_item ;
+ var q ;
 
   @override
   void initState() {
@@ -46,33 +47,34 @@ List<Sqmodel> t;
 var t= await mo.getAll("recipe", "recipe_db");
 
 
-   if(Provider.of<Recipe>(context,listen: false).Fil=="with_out_Filter")
- { await Provider.of<Recipe>(context,listen: false).getRecipes();
-
-//Provider.of<Recipe>(context,listen: false).recipesSearch = Provider.of<Recipe>(context,listen: false).recipes;
+/*    if(Provider.of<Recipe>(context,listen: false).Fil=="with_out_Filter")
+ {  */
+  await Provider.of<Recipe>(context,listen: false).getRecipes();
 if(t.isNotEmpty)
 {
-var bol = Provider.of<Recipe>(context,listen: false).recipes.any((element) 
- => element.label== t.where((element1) => element1.getlable() == element.label).first.getlable());
 
+  for ( var element in  Provider.of<Recipe>(context,listen: false).recipes) {
+   if (t.any((element1) =>element1.getlable()==element.label )== true)
+   {
+        Provider.of<Recipe>(context,listen: false).setrecipelistbymodel(element, "2");
 
-if(bol){
- var q= Provider.of<Recipe>(context,listen: false).recipes.where((element) 
- => element.label== t.where((element1) => element1.getlable() == element.label).first.getlable()).first;
-
-Provider.of<Recipe>(context,listen: false).setrecipelistbymodel(q, "2");
-}}
-    recipeList = Provider.of<Recipe>(context,listen: false).recipes;
-       setState(() {
+    }
+ }
+}
+    setState(() {
       _loading = false;
     }); 
-   }
-else
+
+//}
+   // recipeList = Provider.of<Recipe>(context,listen: false).recipes;
+   
+   
+/* else
  {await Provider.of<Recipe>(context,listen: false).getRecipesSearchwithfilter();
-    recipeList = Provider.of<Recipe>(context,listen: false).recipes;
+
      setState(() {
       _loading = false;
-    }); }
+    }); } */
 
 
   }
@@ -127,32 +129,22 @@ else
       
       icon: Icon(Icons.favorite ,color: Colors.red,size: 40,), onPressed: (){
 
-Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> SqlFavorite()));
+Navigator.of(context).pushReplacement(MaterialPageRoute(
+  builder: (_)=> SqlFavorite()));
 
 
      }),
        
       ),
-      body:_buildContent()
-                  ,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange,
-        child: Icon(Icons.filter_alt_outlined),
+      body:RefreshIndicator(
       
-      onPressed: (){
-
-
-
-
-        
-     Provider.of<Recipe>(context,listen: false).setStateFilter("withFilter");
-        Provider.of<Recipe>(context,listen: false).recipes.clear();
-Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> Filters()));
-
-
+      onRefresh: ()async{
+await Provider.of<Recipe>(context,listen: false).getRecipes();
 
       },
-      ),
+      child: _buildContent()),
+                  
+ 
     );
   }
 
@@ -175,12 +167,12 @@ Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> Filters()
           children: [
 
 ElevatedButton(onPressed: (){
-
-int y = Random().nextInt(99);
-
 List randomList = Provider.of<Recipe>(context,listen: false).recipes;
+int y = Random().nextInt(randomList.length);
 
-Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> DetailsScreen(randomList[y])));
+
+
+Navigator.of(context).push(MaterialPageRoute(builder: (_)=> DetailsScreen(randomList[y])));
 
 }, child: Text("Choose a Random recipe")),
 
@@ -221,7 +213,7 @@ Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> DetailsSc
                               children:[ GestureDetector(
 
                                 onTap: (){
-Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> DetailsScreen(currentitem.recipes[index])));
+Navigator.of(context).push(MaterialPageRoute(builder: (_)=> DetailsScreen(currentitem.recipes[index])));
 
                                 },
                                 child: RecipeTile(
@@ -238,9 +230,7 @@ Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> DetailsSc
                                  children: [
 
  IconButton(
-                                      
-                                      icon: Icon(Icons.share,
-                                    color:Colors.orange
+ icon: Icon(Icons.share,  color:Colors.orange
                                     , 
                                      
                                      ), onPressed: (){
@@ -251,10 +241,8 @@ Share.share('check out my website ${currentitem.recipes[index].shareAs}', subjec
 
                                      }),
 
-                                   IconButton(
-                                      
-                                      icon: Icon( currentitem.recipes[index].fav == "1"?Icons.favorite_border  :Icons.favorite,
-                                    color: currentitem.recipes[index].fav == "1"? Colors.black :Colors.red
+ IconButton(icon: Icon( currentitem.recipes[index].fav == "1"?Icons.favorite_border  :Icons.favorite,
+             color: currentitem.recipes[index].fav == "1"? Colors.black :Colors.red
                                     , 
                                      
                                      ), onPressed: ()async{

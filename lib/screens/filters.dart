@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterrecipe/helpers/recipe.dart';
+import 'package:flutterrecipe/screens/Search.dart';
 import 'package:provider/provider.dart';
 
 import 'home_screen.dart';
@@ -12,12 +13,13 @@ class Filters extends StatefulWidget {
 }
 
 class _FiltersState extends State<Filters> {
-  int value1=0;
+    int value1=0;
     int value2=1;
       int value3=2;
         int value4=3;
           int value5=4;
              int value6=5;
+
   int value11=0;
     int value22=1;
       int value33=2;
@@ -30,6 +32,9 @@ class _FiltersState extends State<Filters> {
              int groupValue_radio_mealType=6;
 TextEditingController co1 ; 
 TextEditingController co2;
+
+
+
   @override
   Widget build(BuildContext context) {
 var size = MediaQuery.of(context).size;
@@ -43,10 +48,11 @@ floatingActionButton: FloatingActionButton(
      
       
     onPressed: (){
-  
-  Provider.of<Recipe>(context,listen: false).getRecipesSearchwithfilter();
-  
-  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> HomeScreen()));
+  Provider.of<Recipe>(context,listen: false).recipesSearch.clear();
+  Provider.of<Recipe>(context,listen: false).getRecipesSearch();
+ // then((value) => showSearch(context: context, delegate: Se()));
+Navigator.of(context).pop();
+
   
   }, child: Text("Start")
 
@@ -215,8 +221,10 @@ TextField(//
 
             
     decoration: new InputDecoration(
-                 border: OutlineInputBorder(borderRadius:BorderRadius.only(topRight:Radius.circular(50) ,bottomLeft:Radius.circular(75) ,bottomRight: Radius.circular(50))),
-     
+ border: OutlineInputBorder(
+  borderRadius:BorderRadius.only(topRight:Radius.circular(50) 
+  ,bottomLeft:Radius.circular(75) ,bottomRight: Radius.circular(50))),
+
           labelText: "ingr",           
           fillColor:Colors.white,
           filled : true,            
@@ -251,6 +259,7 @@ return Column(
   crossAxisAlignment: CrossAxisAlignment.center, 
   children: [
 RadioListTile(
+  activeColor: Colors.orange,
    contentPadding: EdgeInsets.symmetric(horizontal: size.width *0.1),
   groupValue: groupValue_radio_diet,
   value: val, onChanged: (bo){
@@ -277,6 +286,7 @@ return Column(
   crossAxisAlignment: CrossAxisAlignment.center, 
   children: [
 RadioListTile(
+  activeColor: Colors.orange,
    contentPadding: EdgeInsets.symmetric(horizontal: size.width *0.1),
   groupValue: groupValue_radio_mealType,
   value: val, onChanged: (bo){
@@ -303,8 +313,9 @@ Widget health(BuildContext context) {
         PopupMenuItem<healthpop>(
           value: healthpop.alcohol_cocktail,
           child: Text('alcohol_cocktail'),
+
         ),
-        PopupMenuItem<healthpop>(value: healthpop.alcohol_free, child: Text('alcohol_free')),
+        PopupMenuItem<healthpop>(value: healthpop.alcohol_free, child: Text('alcohol_free') ,),
         PopupMenuItem<healthpop>(value: healthpop.celery_free, child: Text('celery_free')),
          PopupMenuItem<healthpop>(value: healthpop.crustacean_free, child: Text('crustacean_free')),
           PopupMenuItem<healthpop>(value: healthpop.dairy_free, child: Text('dairy_free')),
@@ -341,6 +352,8 @@ Widget health(BuildContext context) {
                                        PopupMenuItem<healthpop>(value: healthpop.wheat_free, child: Text('wheat_free')),
       ];
     },
+    color: Colors.orange.shade200,
+
     onSelected:(healthpop menu) 
     {
       
@@ -488,6 +501,7 @@ Widget cuisineType(BuildContext context) {
                      
       ];
     },
+    color: Colors.orange.shade200,
     onSelected:(cuisineTypepop menu) 
     {
       Provider.of<Recipe>(context,listen: false).CuisineTypeMap.forEach((key, value) {
@@ -581,6 +595,7 @@ Widget dishType(BuildContext context) {
                          
       ];
     },
+    color: Colors.orange.shade200,
     onSelected:(dishTypepop menu) 
     {
 Provider.of<Recipe>(context,listen: false).dishTypepopMap.forEach((key, value) {

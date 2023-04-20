@@ -5,7 +5,7 @@ class RecipeModel {
   String source;
   String shareAs;
   String fav;
- List<String> ingredientLines;
+ List ingredientLines;
   List<dynamic> ingredients;
   RecipeModel({
     this.label,
