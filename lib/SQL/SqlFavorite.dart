@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +23,20 @@ class SqlFavorite extends StatefulWidget {
 }
 
 class _SqlFavoriteState extends State<SqlFavorite> {
-  
+  var t  = false;
+  void initState() {
+    super.initState();
 
+Timer(Duration(seconds: 10), (){
+
+setState(() {
+t= true;  
+});
+
+
+});
+
+  }
   @override
   Widget build(BuildContext context) {
     
@@ -79,7 +93,7 @@ Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> HomeScree
   }
 
   Widget n(BuildContext context, List<recipemodel> recipes ,mySqdb cur) {
-
+var size = MediaQuery.of(context).size;
     return Consumer<Recipe>(
       builder:  (ctx, currentitem, _){
       return ListView.builder(
@@ -115,8 +129,17 @@ await cur.delete(recipemodel(id: recipes[position].id, lable: recipes[position].
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(30)),
-                              child: Image.network(recipes[position].image,alignment: Alignment.center,height: 200,fit: BoxFit.cover,scale: 1,)
-                            
+child: 
+FadeInImage(
+placeholder: AssetImage("image/back.png"),
+                  image : NetworkImage(recipes[position].image,
+                  ),
+alignment: Alignment.center,height: 200,fit: BoxFit.cover,
+              
+                ),
+
+
+
                             ),
                           ),
 
@@ -124,7 +147,52 @@ await cur.delete(recipemodel(id: recipes[position].id, lable: recipes[position].
                         width:MediaQuery.of(context).size.width * 0.5,
                         
                           child: ListTile(
-                            title: Text('${recipes[position].lable}'),
+                            title: Stack(
+                              alignment: Alignment.center,
+                              
+                              children:[
+
+TweenAnimationBuilder<double>(
+       
+          tween: Tween(begin:0.1 , end: 0.4 ), 
+       //   child:Icon(Icons.favorite, color: Colors.orange.shade300,size: 50,),
+          duration:Duration(seconds: 5) ,
+          builder: (_, double t , child)=>
+          Transform.scale(
+            alignment: Alignment.center,
+            scale: t,
+          child:Icon(Icons.favorite, color: Colors.orange.shade300,size: 300,) ,) ),
+
+
+TweenAnimationBuilder<double>(
+       
+          tween: Tween(begin:0.2 , end: 0.5 ), 
+       //   child:Icon(Icons.favorite, color: Colors.orange.shade300,size: 50,),
+          duration:Duration(seconds: 8) ,
+          builder: (_, double t , child)=>
+          Transform.scale(
+               alignment: Alignment.center,
+            scale: t,
+          child:Icon(Icons.favorite, color: Colors.orange.shade100,size: 200,) ,) ),
+
+
+TweenAnimationBuilder<double>(
+       
+          tween: Tween(begin:0.2 , end: 0.5 ), 
+       //   child:Icon(Icons.favorite, color: Colors.orange.shade300,size: 50,),
+          duration:Duration(seconds: 10) ,
+          builder: (_, double t , child)=>
+          Transform.scale(
+               alignment: Alignment.center,
+            scale: t,
+          child:Icon(Icons.favorite, color: Colors.orange.shade50,size: 125,) ,) ),
+          
+                        
+                               Text('${recipes[position].lable}'),
+                            
+                 
+                            
+                            ]),
                            
                       
                             ),
@@ -135,6 +203,13 @@ await cur.delete(recipemodel(id: recipes[position].id, lable: recipes[position].
   ),
 
                       ),
+                                   
+                            Container(
+                      margin: EdgeInsets.symmetric(horizontal: size.height / 18),
+                      width: size.width * 1.2,
+                      color: Colors.black,
+                      height:1,
+                    ),
             ],
           );
 

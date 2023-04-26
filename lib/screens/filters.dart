@@ -73,17 +73,46 @@ Navigator.of(context).pop();
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              
 SizedBox(height: 20,),
 Container(
+  decoration: BoxDecoration(
+borderRadius: BorderRadius.circular(20),
 color: Colors.orange,
+  ),
+
 height: 60,
   width: 200,
-  child: Center(child: Text("Choose", style: TextStyle(fontSize: 40,color: Colors.white),))  ,
+  child: Center(child: Text("Filtering", style: TextStyle(fontSize: 40,color: Colors.white),))  ,
 ),
-
-              Text("Diet", style:TextStyle(fontSize: 35),),
+SizedBox(height: 5,),
+Container(
+                      margin: EdgeInsets.symmetric(horizontal: size.height / 18),
+                      width: size.width * 1.2,
+                      color: Colors.black,
+                      height:1,
+                    ),
+ Container(
+  alignment: Alignment.center,
+  width: 100,
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
+  color: Colors.orange.shade300
+  ),
+ child: Text("Diet", style:TextStyle(fontSize: 35),)),
              
 
+Container(
+
+  decoration: BoxDecoration(
+    boxShadow: [BoxShadow(color: Colors.orange.shade100,offset: Offset(2,10))],
+borderRadius: BorderRadius.all(Radius.circular(20)),
+color: Colors.white,
+  gradient: LinearGradient(colors: [Colors.orange.shade200 , Colors.white],begin: Alignment.bottomCenter , end: Alignment.topCenter ,stops: [0, 1]  )
+  ),
+  
+  
+  child:Column(children: [
  Row(
 mainAxisAlignment: MainAxisAlignment.spaceAround,
 crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,7 +141,15 @@ Container(
     child: radio_diet('low-fat', value5),),
     Container(
       width:size.width *(1/3) ,
-    child:    radio_diet('low-sodium', value6))],) , 
+    child:    radio_diet('low-sodium', value6))],)
+
+
+
+
+
+],) ),
+
+
 
 
  SizedBox(height: 20,),
@@ -133,14 +170,61 @@ Row(
 Row(
   children: [
         dishType(context),
-         Text('dishType',style: TextStyle(fontSize: 25),)
+         Stack(
+          alignment: Alignment.center,
+          children:[
+Container(
+    height: 25,
+            width: 100,
+             decoration: BoxDecoration(
+              
+  gradient: LinearGradient(colors: [Colors.orange.shade200 , Colors.white],begin: Alignment.bottomCenter , end: Alignment.topCenter ,stops: [0, 1]  ),
+              shape: BoxShape.rectangle),),
+          Container(
+            height: 50,
+            width: 50,
+             decoration: BoxDecoration(
+              
+  gradient: LinearGradient(colors: [Colors.orange.shade200 , Colors.white],begin: Alignment.bottomCenter , end: Alignment.topCenter ,stops: [0, 1]  ),
+              shape: BoxShape.circle),), 
+          Text('dishType',style: TextStyle(fontSize: 25)),
+
+         ])
   ],
 ),
 
 Row(
     children: [
           cuisineType(context),
-          Text('CuisineType',style: TextStyle(fontSize: 23))
+
+
+Stack(
+    alignment: Alignment.center,
+  children: [
+
+    Container(
+    height: 25,
+    width: 125,
+             decoration: BoxDecoration(
+              
+  gradient: LinearGradient(colors: [Colors.orange.shade200 , Colors.white],begin: Alignment.bottomCenter , end: Alignment.topCenter ,stops: [0, 1]  ),
+              shape: BoxShape.rectangle),),
+
+Container(
+    height: 50,
+            width: 50,
+             decoration: BoxDecoration(
+              
+  gradient: LinearGradient(colors: [Colors.orange.shade200 , Colors.white],begin: Alignment.bottomCenter , end: Alignment.topCenter ,stops: [0, 1]  ),
+              shape: BoxShape.circle),),
+
+
+
+ Text('CuisineType',style: TextStyle(fontSize: 23))
+
+],)
+
+         
     ],
 ) 
 ]
@@ -149,7 +233,31 @@ Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
           health(context),
-          Text('Health',style: TextStyle(fontSize: 25),)
+         Stack(
+          
+            alignment: Alignment.center,
+          children: [
+Container(
+    height: 25,
+            width: 100,
+             decoration: BoxDecoration(
+              
+  gradient: LinearGradient(colors: [Colors.orange.shade200 , Colors.white],begin: Alignment.bottomCenter , end: Alignment.topCenter ,stops: [0, 1]  ),
+              shape: BoxShape.rectangle),),
+
+Container(
+    height: 50,
+            width: 50,
+             decoration: BoxDecoration(
+              
+  gradient: LinearGradient(colors: [Colors.orange.shade200 , Colors.white],begin: Alignment.bottomCenter , end: Alignment.topCenter ,stops: [0, 1]  ),
+              shape: BoxShape.circle),),
+
+
+
+ Text('Health',style: TextStyle(fontSize: 25))
+
+],)
     ],
 ), 
 SizedBox(height: 20,),
@@ -160,8 +268,30 @@ SizedBox(height: 20,),
                       color: Colors.black,
                       height:1,
                     ),
-                       Text("MealType", style:TextStyle(fontSize: 35),),
+                       Container(
+                         alignment: Alignment.center,
+  width: 200,
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
+  color: Colors.orange.shade300
+  ),
+                        
+                        
+                        child: Text("MealType", style:TextStyle(fontSize: 35),)),
 
+Container(
+  
+  
+  decoration: BoxDecoration(
+    boxShadow: [BoxShadow(color: Colors.orange.shade100,offset: Offset(2,10))],
+borderRadius: BorderRadius.all(Radius.circular(20)),
+color: Colors.white,
+  gradient: LinearGradient(colors: [Colors.orange.shade200 , Colors.white],begin: Alignment.bottomCenter , end: Alignment.topCenter ,stops: [0, 1]  )
+  ),
+  
+  
+  
+  child: Column(children: [
 Row(
 mainAxisAlignment: MainAxisAlignment.spaceBetween,
 crossAxisAlignment: CrossAxisAlignment.center,
@@ -193,19 +323,28 @@ Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.09),
     width:size.width *(1/2) ,
     child: radio_mealType('fatlow', value55),),
-],) , 
+],) 
 
+
+
+],),),
+
+
+SizedBox(height: 20,),
 Column(children: [
 TextField( 
     keyboardType: TextInputType.number,
   
             
     decoration: new InputDecoration(
-                 border: OutlineInputBorder(borderRadius:BorderRadius.only(topRight:Radius.circular(50) ,bottomLeft:Radius.circular(75) ,bottomRight: Radius.circular(50))),
+ border: OutlineInputBorder(
+  borderRadius:BorderRadius.only(
+    topRight:Radius.circular(50) ,bottomLeft:Radius.circular(75) ,bottomRight: Radius.circular(50))),
 
     
           labelText: "calories",       
-          fillColor:Colors.white, 
+
+         fillColor:Colors.orange.shade100,
           filled : true,         
           contentPadding: EdgeInsets.all(5)
           ),            
@@ -216,17 +355,19 @@ TextField(
             },
   ),
 
-TextField(//    
+TextField(
+    
     keyboardType: TextInputType.number, 
 
-            
+             
     decoration: new InputDecoration(
  border: OutlineInputBorder(
   borderRadius:BorderRadius.only(topRight:Radius.circular(50) 
-  ,bottomLeft:Radius.circular(75) ,bottomRight: Radius.circular(50))),
+  ,topLeft:Radius.circular(75) ,bottomRight: Radius.circular(50))),
+hoverColor: Colors.orange.shade100,
 
           labelText: "ingr",           
-          fillColor:Colors.white,
+          fillColor:Colors.orange.shade100,
           filled : true,            
           contentPadding: EdgeInsets.all(5)
           ),            
@@ -257,6 +398,7 @@ TextField(//
 return Column(
    mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.center, 
+
   children: [
 RadioListTile(
   activeColor: Colors.orange,
