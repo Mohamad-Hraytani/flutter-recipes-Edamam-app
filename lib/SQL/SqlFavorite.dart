@@ -152,42 +152,9 @@ alignment: Alignment.center,height: 200,fit: BoxFit.cover,
                               
                               children:[
 
-TweenAnimationBuilder<double>(
-       
-          tween: Tween(begin:0.1 , end: 0.4 ), 
-       //   child:Icon(Icons.favorite, color: Colors.orange.shade300,size: 50,),
-          duration:Duration(seconds: 5) ,
-          builder: (_, double t , child)=>
-          Transform.scale(
-            alignment: Alignment.center,
-            scale: t,
-          child:Icon(Icons.favorite, color: Colors.orange.shade300,size: 300,) ,) ),
-
-
-TweenAnimationBuilder<double>(
-       
-          tween: Tween(begin:0.2 , end: 0.5 ), 
-       //   child:Icon(Icons.favorite, color: Colors.orange.shade300,size: 50,),
-          duration:Duration(seconds: 8) ,
-          builder: (_, double t , child)=>
-          Transform.scale(
-               alignment: Alignment.center,
-            scale: t,
-          child:Icon(Icons.favorite, color: Colors.orange.shade100,size: 200,) ,) ),
-
-
-TweenAnimationBuilder<double>(
-       
-          tween: Tween(begin:0.2 , end: 0.5 ), 
-       //   child:Icon(Icons.favorite, color: Colors.orange.shade300,size: 50,),
-          duration:Duration(seconds: 10) ,
-          builder: (_, double t , child)=>
-          Transform.scale(
-               alignment: Alignment.center,
-            scale: t,
-          child:Icon(Icons.favorite, color: Colors.orange.shade50,size: 125,) ,) ),
-          
-                        
+TweenFav( 300),
+TweenFav( 200),
+TweenFav( 125),                        
                                Text('${recipes[position].lable}'),
                             
                  
@@ -218,4 +185,23 @@ TweenAnimationBuilder<double>(
       );}
     );
   }
+
+
+TweenFav( double scale){
+
+return TweenAnimationBuilder<double>(
+       
+          tween: Tween(begin:0.2 , end: 0.5 ), 
+       //   child:Icon(Icons.favorite, color: Colors.orange.shade300,size: 50,),
+          duration:Duration(seconds: 10) ,
+          builder: (_, double t , child)=>
+          Transform.scale(
+               alignment: Alignment.center,
+            scale: t,
+          child:Icon(Icons.favorite, color: Colors.orange.shade50,size: scale,) ,) );
+
+}
+
+
+
 }
