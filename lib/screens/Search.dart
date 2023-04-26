@@ -10,25 +10,29 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'details_screen.dart';
+import 'filters.dart';
 
 
 class Se extends SearchDelegate {
 
-
-/* void gotoPost(List<Artic> item ,  int a , BuildContext context) {
-    
-                    
-
-print( item[a].author);
-Artic b = item[a];
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (BuildContext context) =>  Sl(b)));
-  } */
-
-
    @override
   List<Widget> buildActions(BuildContext context) {
-   return[Icon(Icons.search)];
+   return[
+IconButton(icon:  Icon(Icons.filter_alt_outlined , color: Colors.orange,size: 30,), 
+onPressed:    ()async{
+  await Provider.of<Recipe>(context,listen: false).iniclear();
+
+  showModalBottomSheet( context: context,
+        isScrollControlled: true,
+
+     
+    builder: (BuildContext context) =>Filters());
+      },)
+
+
+
+
+   ];
   }
 
   @override
@@ -43,7 +47,7 @@ Artic b = item[a];
   {
 
 
-Provider.of<Recipe>(context,listen: false).getRecipesSearch(query);
+Provider.of<Recipe>(context,listen: false).getRecipesSearch( SearchWord: query);
 Provider.of<mySqdb>(context,listen: false).sett(query); 
   return _buildContent(query,context);
 
@@ -88,110 +92,130 @@ showResults(context);
 
 _buildContent(String searchword, BuildContext ctx1) {
  
-
-
-
-
-
-//getlist(searchword, ctx1);
  return
-     Consumer<Recipe>(
-      builder: (ctx1, currentitem, _)
-      {
+     Scaffold(
+      floatingActionButton: 
+         FloatingActionButton(
+        backgroundColor: Colors.orange,
+        child: Icon(Icons.filter_alt_outlined),
       
+onPressed:    ()async{
+  await Provider.of<Recipe>(ctx1,listen: false).iniclear();
+
+  showModalBottomSheet( context: ctx1,
+        isScrollControlled: true,
+
+     
+    builder: (BuildContext context) =>Filters());
+      },
+      ),
+      
+
+  body: Consumer<Recipe>(
+        builder: (ctx1, currentitem, _)
+        {
         
-        return SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          
+          return SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
 
 
 
 
-            SizedBox(height: 16.0),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
-              child: Text(
-                "Today's Special Dishes",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  //color: Colors.black, ~dynamic
-                  fontWeight: FontWeight.w600,
+              SizedBox(height: 16.0),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.0),
+                child: Text(
+                  "Today's Special Dishes",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    //color: Colors.black, ~dynamic
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
-       
-                    
-                     StaggeredGridView.countBuilder(
-                        physics: ScrollPhysics(
-                          parent: BouncingScrollPhysics(),
-                        ),
-                        crossAxisCount: 4,
-                        shrinkWrap: true,
-                        itemCount: currentitem.recipesSearch.length,
-                        itemBuilder: (context, index) {
-                          return Consumer<mySqdb>(builder: (ctx , curt , _)
-                            {return Column(
-                              children:[ GestureDetector(
+         
+                      
+                       StaggeredGridView.countBuilder(
+                          physics: ScrollPhysics(
+                            parent: BouncingScrollPhysics(),
+                          ),
+                          crossAxisCount: 4,
+                          shrinkWrap: true,
+                          itemCount: currentitem.recipesSearch.length,
+                          itemBuilder: (context, index) {
+                            return Consumer<mySqdb>(builder: (ctx , curt , _)
+                              {return Column(
+                                children:[ GestureDetector(
 
-                                onTap: (){
-Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> DetailsScreen(currentitem.recipesSearch[index])));
+                                  onTap: (){
+Navigator.of(context).pushReplacement(MaterialPageRoute(builder:
+ (_)=> DetailsScreen(currentitem.recipesSearch[index])));
 
-                                },
-                                child: RecipeTile(
-                                  imageUrl: currentitem.recipesSearch[index].image,
-                                  recipeName: currentitem.recipesSearch[index].label,
-                                  recipeSource: currentitem.recipesSearch[index].source,
-                                  
-                        
+                                  },
+                                  child: RecipeTile(
+                                    imageUrl: currentitem.recipesSearch[index].image,
+                                    recipeName: currentitem.recipesSearch[index].label,
+                                    recipeSource: currentitem.recipesSearch[index].source,
+                                    
+                          
+                                  ),
                                 ),
-                              ),
-                              Builder(builder: (BuildContext ctx){
-                               return  Row(
-                                 children: [
+                                Builder(builder: (BuildContext ctx){
+                                 return  Row(
+                                   children: [
 
  IconButton(
-                                      
-                                      icon: Icon(Icons.share,
-                                    color:Colors.red
-                                    , 
-                                     
-                                     ), onPressed: (){
+                                        
+                                        icon: Icon(Icons.share,
+                                      color:Colors.red
+                                      , 
+                                       
+                                       ), onPressed: (){
 
 Share.share('check out my website https://example.com', subject: 'Look what I made!');
 
 
 
-                                     }),
+                                       }),
 
-                                 ],
-                               );}
-                              )
-                              
-                              ]
-                            );}
-                          );
-                        },
-                        staggeredTileBuilder: (int index) =>
-                            new StaggeredTile.fit(2),
-                        mainAxisSpacing: 16.0,
-                        crossAxisSpacing: 16.0,
-                     )
-                        ]),
-                      );
-                      
+                                   ],
+                                 );}
+                                )
+                                
+                                ]
+                              );}
+                            );
+                          },
+                          staggeredTileBuilder: (int index) =>
+                              new StaggeredTile.fit(2),
+                          mainAxisSpacing: 16.0,
+                          crossAxisSpacing: 16.0,
+                       ),
+
+                    
+                          ]),
+                        );
+                        
+              
             
           
         
-      
   
   
+        }
+        ),
+     );
       }
+
+
+}
+
       );
       }
 
 }
-
-

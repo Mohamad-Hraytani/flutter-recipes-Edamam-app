@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ List<RecipeModel> recipesSearch = [];
 
 
 String Fil="with_out_Filter";
-
+var oldsearch;
 
 String diet='';
 String health='';
@@ -26,7 +27,8 @@ String ingr ='';
 
 
 setrecipelistbymodel(RecipeModel m, String va){
-m.fav=va;
+  recipes.where((element) => element.label == m.label).first.fav=va;
+
 notifyListeners();
 }
 
@@ -188,45 +190,95 @@ notifyListeners();
 initState(){
 dietMap.forEach((key, value) {
 if(value!="")
-diet="&diet=$value";
-notifyListeners();
+{diet="&diet=$value";
+notifyListeners();}
 
  });
+
 dishTypepopMap.forEach((key, value) {
 if(value!="")
-dishType="&dishType=$value";
-notifyListeners();
+{dishType="&dishType=$value";
+notifyListeners();}
  });
 
  CuisineTypeMap.forEach((key, value) {
 if(value!="")
-cuisineType="&cuisineType=$value";
-notifyListeners();
+{cuisineType="&cuisineType=$value";
+notifyListeners();}
  });
+
  healthMap.forEach((key, value) {
 if(value!="")
-health="&health=$value";
-notifyListeners();
+{health="&health=$value";
+notifyListeners();}
  });
+
  MealTypeMap.forEach((key, value) {
 if(value!="")
-mealType="&mealType=$value";
-notifyListeners();
+{mealType="&mealType=$value";
+notifyListeners();}
  });
 
 
 
 }
 
+
+iniclear(){
+
+setcalories("");
+setingr("");
+
+
+dietMap.forEach((key, value) {
+dietMap[key]="";
+});
+
+MealTypeMap.forEach((key, value) {
+MealTypeMap[key]="";
+});     
+healthMap.forEach((key, value) {
+healthMap[key]="";
+
+     });
+
+CuisineTypeMap.forEach((key, value) {
+CuisineTypeMap[key]="";
+
+     });
+
+dishTypepopMap.forEach((key, value) {
+dishTypepopMap[key]="";
+
+     });
+
+
+ diet='';
+ health='';
+ cuisineType='';
+ mealType='';
+ dishType='';
+ calories='';
+ ingr ='';
+
+notifyListeners();
+
+}
+
+
+
   Future<void> getRecipes() async {
-    String url =
-'https://api.edamam.com/search?q=all&app_id=85903da9&app_key=8bf0ca05cd6cf6b80300662f4aebba2d&from=0&to=100';
+    recipes.clear();
+
+    final url = Uri.parse(
+'https://api.edamam.com/search?q=all&app_id=85903da9&app_key=8bf0ca05cd6cf6b80300662f4aebba2d&from=0&to=100');
+
 
     var response = await http.get(url);
 
     var jsonData = jsonDecode(response.body);
 
-    if (jsonData['more'] == true) {
+ if (jsonData['more'] == true) {
 
       jsonData['hits'].forEach((element) {
 
@@ -246,17 +298,30 @@ notifyListeners();
         }
       });
     }
+
+
+
   }
 
 
 
-  Future<void> getRecipesSearch(String SearchWord) async {
+  Future<void> getRecipesSearch({String SearchWord = ""}) async {
+
+
+if (SearchWord == "")
+{oldsearch=oldsearch;
+notifyListeners();
+}
+else
+{oldsearch=SearchWord;
+notifyListeners();}
 
 recipesSearch.clear();
 
-    String url =
-        'https://api.edamam.com/search?q=$SearchWord&app_id=85903da9&app_key=8bf0ca05cd6cf6b80300662f4aebba2d';
-        
+    await initState();
+
+    final url = Uri.parse('https://api.edamam.com/search?q=$oldsearch&app_id=85903da9&app_key=8bf0ca05cd6cf6b80300662f4aebba2d$mealType$health$cuisineType$dishType$diet$calories$ingr&from=0&to=100');
+      
     var response = await http.get(url);
 
     var jsonData = jsonDecode(response.body);
@@ -286,13 +351,14 @@ recipesSearch.clear();
     notifyListeners();
   }
 
-Future<void> getRecipesSearchwithfilter({String SearchWord=""}) async {
+Future<void> getRecipesSearchwithfilter({String SearchWord="."}) async {
+
+  recipes.clear();
 await initState();
-if(mealType==''&&health==''&& cuisineType==''&& dishType==''&& diet==''&&calories==''&&ingr=='')
- SearchWord = "all";
-    String url =
-        'https://api.edamam.com/search?q=$SearchWord&app_id=85903da9&app_key=8bf0ca05cd6cf6b80300662f4aebba2d$mealType$health$cuisineType$dishType$diet$calories$ingr';
+
+    final url = Uri.parse('https://api.edamam.com/search?q=$SearchWord&app_id=85903da9&app_key=8bf0ca05cd6cf6b80300662f4aebba2d$mealType$health$cuisineType$dishType$diet$calories$ingr&from=0&to=100');
       
+    
     var response = await http.get(url);
 
     var jsonData = jsonDecode(response.body);
@@ -317,6 +383,7 @@ if(mealType==''&&health==''&& cuisineType==''&& dishType==''&& diet==''&&calorie
         }
       });
     }
+  
   }
 
 
